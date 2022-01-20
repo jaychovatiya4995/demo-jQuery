@@ -32,14 +32,37 @@ const set_success = element => {
 
 };
 
+var validation = true;
+
 $('input').blur(function () {
     element = $(this)[0];
     message = element.title;
     pattern = new RegExp(element.pattern);
     if (element.value != "Save" && element.value != "Update" && element.value != "Clear" && element.value != "Cancle") {
-        if (!pattern.test(element.value) || element.value == "") {
+        gender = $('input[type=radio][name=gender]');
+        gender_error_message = $('div[name="gender_message"]')[0];
+        hobby = $('input[type=checkbox][name=hobby]');
+        hobby_error_message = $('div[name="hobby_message"]')[0];
+
+        if(element.name == 'hobby' || element.name == 'gender'){
+            if(element.name == 'hobby'){
+                if (!hobby[0].checked && !hobby[1].checked && !hobby[2].checked) {
+                    set_error(hobby_error_message, message);
+                    validation = false;
+                } else {
+                    set_success(hobby_error_message);
+                    validation = true;
+                }
+            }else if (!gender[0].checked && !gender[1].checked && !gender[2].checked) {
+                set_error(gender_error_message, message);
+                validation = false;
+            } else {
+                set_success(gender_error_message);
+                validation = true;
+            }
+        }else if (!pattern.test(element.value) || element.value == "") {
             set_error(element, message);
-            validation = false;    
+            input_validation = false;    
         } else {
             set_success(element);
             validation = true;
@@ -53,49 +76,19 @@ $('select').blur(function () {
 
     if (element.options[element.selectedIndex].value == "") {
         set_error(element, message);
-        return false;
+        validation = false;
     } else {
         set_success(element);
-        return true;
+        validation = true;
     }
 });
 
-function radio_button_validation() {
-    gender = $('input[type=radio][name=gender]');
-    gender_error_message = $('div[name="gender_message"]')[0];
-    var message = "You must select at least one option";
-
-    if (!gender[0].checked && !gender[1].checked && !gender[2].checked) {
-        set_error(gender_error_message, message);
-        input_validation = false;
-        return false;
-    } else {
-        set_success(gender_error_message);
-        return true;
-    }
-}
-
-function chekbox_validation() {
-    hobby = $('input[type=checkbox][name=hobby]');
-    hobby_error_message = $('div[name="hobby_message"]')[0];
-    var message = "You must select at least one option";
-
-    if (!hobby[0].checked && !hobby[1].checked && !hobby[2].checked) {
-        set_error(hobby_error_message, message);
-        return false;
-    } else {
-        set_success(hobby_error_message);
-        return true;
-    }
-}
-
-var form = $(".border");
 $('.save').on('click',function (){
-    console.log('validate')
-    if (form.valid() && chekbox_validation() && radio_button_validation()) {
-        _add()
-    }else{
-        chekbox_validation();
-        radio_button_validation();
+    $('.validate').each(function(){
+            $(this).trigger('blur');
+            //each validate class event one by one... will be blured
+    })
+    if(validation){
+        _add();
     }
 });

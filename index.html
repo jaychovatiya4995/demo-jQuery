@@ -11,118 +11,139 @@
     <link rel="stylesheet" href="demo.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js"></script>
     <script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
 
     <title>Data Form</title>
 </head>
 
 <body>
-    <div class="col-6">
-    <form class="border mt-4" id="form_id">
-        <div class="form-group input-control">
-            <label for="name">Your Name</label>
-            <input type="text" name="username" class="form-control validate" onblur="" pattern="^[a-zA-Z ]+$" title="You can not use special charectur and numeric value." required> 
-            <div class="error remove"></div>
-        </div>
+    <div class="row pl-4">
+        <div class="col-3">
+            <form class="border mt-4" id="form_id">
+                <div class="form-group input-control">
+                    <label for="name">Your Name</label>
+                    <input type="text" name="username" class="form-control validate" onblur="" pattern="^[a-zA-Z ]+$"
+                        title="You can not use special charectur and numeric value." required>
+                    <div class="error remove"></div>
+                </div>
 
-        <div class="form-group input-control">
-            <label for="email">Email Address</label>
-            <input type="email" name="useremail" class="form-control validate" onblur="" pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" title='Enter valid email must be include "@" and "."' required>
-            <div class="error remove"></div>
-        </div>
+                <div class="form-group input-control">
+                    <label for="email">Email Address</label>
+                    <input type="email" name="useremail" class="form-control validate" onblur=""
+                        pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
+                        title='Enter valid email must be include "@" and "."' required>
+                    <div class="error remove"></div>
+                </div>
 
-        <div class="input-control">
-            <label for="birthday">Birthdate</label>
-            <input type="date" class="birthdate validate" id="txtDate" onblur="" max="get_today_date()" name="birthday" title="Please select a birthdate" required>
-            <div class="error remove"></div>
-        </div>
+                <div class="input-control">
+                    <label for="birthday">Birthdate</label>
+                    <input type="date" class="birthdate validate" id="txtDate" onblur="" max="get_today_date()"
+                        name="birthday" title="Please select a birthdate" required>
+                    <div class="error remove"></div>
+                </div>
 
-        <div>
-            <label for="gender">Gender</label>
-            <div class="form-check form-check-inline">  
-                <input class="form-radio-input validate" type="radio" onblur="radio_button_validation()" name="gender" title="You must select at least one option" value="male">
-                <label class="form-check-label" for="male">Male</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-radio-input validate" type="radio" onblur="radio_button_validation()" name="gender" title="You must select at least one option" value="female">
-                <label class="form-check-label" for="inlineRadio2">Female</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-radio-input validate" type="radio" onblur="radio_button_validation()" name="gender" title="You must select at least one option" value="other">
-                <label class="form-check-label" for="inlineRadio3">Other</label>
-              </div>
-              <div name='gender_message' class="input-control">
-              <div class="error remove"></div>
-              </div>
-        </div>
+                <div>
+                    <label for="gender">Gender</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-radio-input validate" type="radio" 
+                            name="gender" title="You must select at least one option" value="male">
+                        <label class="form-check-label" for="male">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-radio-input validate" type="radio" 
+                            name="gender" title="You must select at least one option" value="female">
+                        <label class="form-check-label" for="inlineRadio2">Female</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-radio-input validate" type="radio" 
+                            name="gender" title="You must select at least one option" value="other">
+                        <label class="form-check-label" for="inlineRadio3">Other</label>
+                    </div>
+                    <div name='gender_message' class="input-control">
+                        <div class="error remove"></div>
+                    </div>
+                </div>
 
-        <div>
-            <label for="hobby">Hobby</label>
-            <div class="form-check form-check-inline checkbox-group required">
-                <input class="form-check-input validate" type="checkbox" onblur="chekbox_validation()" title="You must select at least one option" name="hobby" value="reading">
-                <label class="form-check-label" for="reading">Reading</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input validate" type="checkbox" onblur="chekbox_validation()" title="You must select at least one option" name="hobby" value="traveling">
-                <label class="form-check-label" for="traveling">Traveling</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input validate" type="checkbox" onblur="chekbox_validation()" title="You must select at least one option" name="hobby" value="sport">
-                <label class="form-check-label" for="spo">Sport</label>
-              </div>
-              <div name='hobby_message' class="input-control">
-                <div class="error remove"></div>
-              </div> 
-        </div>
+                <div>
+                    <label for="hobby">Hobby</label>
+                    <div class="form-check form-check-inline checkbox-group required">
+                        <input class="form-check-input validate" type="checkbox" 
+                            title="You must select at least one option" name="hobby" value="reading">
+                        <label class="form-check-label" for="reading">Reading</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input validate" type="checkbox" 
+                            title="You must select at least one option" name="hobby" value="traveling">
+                        <label class="form-check-label" for="traveling">Traveling</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input validate" type="checkbox" 
+                            title="You must select at least one option" name="hobby" value="sport">
+                        <label class="form-check-label" for="spo">Sport</label>
+                    </div>
+                    <div name='hobby_message' class="input-control">
+                        <div class="error remove"></div>
+                    </div>
+                </div>
 
-        <div>
-            <div class="input-control">
-                <label class="form-check-label" for="contries">Country</label>
-                <select id="countySel" name="country" class="validate" size="1" title="Please select a country." required> 
-                <option value="" selected="selected">Select Country</option>
-                </select>
-                <div class="error remove"></div>
+                <div>
+                    <div class="input-control">
+                        <label class="form-check-label" for="contries">Country</label>
+                        <select id="countySel" name="country" class="validate" size="1" title="Please select a country."
+                            required>
+                            <option value="" selected="selected">Select Country</option>
+                        </select>
+                        <div class="error remove"></div>
+                    </div>
+
+                    <div class="input-control">
+                        <label class="form-check-label" for="state">State</label>
+                        <select id="stateSel" name="state" class="validate" size="1"
+                            title="Please select state.(If you can not select country, then select country first.)"
+                            required>
+                            <option value="" selected="selected">Select Country First</option>
+                        </select>
+                        <div class="error remove"></div>
+                    </div>
+
+                    <div class="input-control">
+                        <label class="form-check-label" for="cities">City</label>
+                        <select id="districtSel" name="cities" class="validate" size="1"
+                            title="Please select city.(If you can't select country or state, then select country or state first.)"
+                            required>
+                            <option value="" selected="selected">Select State First</option>
+                        </select>
+                        <div class="error remove"></div>
+                    </div>
+                </div>
+                <div class="text-center">
+                <!-- <button type="submit" class="btn btn-outline-danger">Clear</button> -->
+                <input name="save" type="submit" class="save btn btn-outline-success mt-4 mb-3"
+                    value="Save">
+                <input name="clear" type="button" onclick="_clear()" class="btn btn-outline-danger mt-4 mb-3"
+                    value="Clear">
+                </div>
+            </form>
+        </div>
+        <div class="col-6">
+            <div class="continer">
+                <div class="row mt-4">
+                    <div class="col">
+                        <input name="search" type="text" class="search" placeholder="Search">
+                    </div>
+                    <div class="col">
+                        <label class="form-check-label" for="filter">Filter : </label>
+                        <input name='filter' type="button" class="sorting" value="Ascending">
+                    </div>
+                </div>
             </div>
-                                 
-            <div class="input-control">
-                <label class="form-check-label" for="state">State</label>
-                <select id="stateSel" name="state" class="validate" size="1" title="Please select state.(If you can not select country, then select country first.)" required>
-                <option value="" selected="selected">Select Country First</option>
-                </select>
-                <div class="error remove"></div>
-            </div>
 
-            <div class="input-control"> 
-                <label class="form-check-label" for="cities">City</label>
-                <select id="districtSel" name="cities" class="validate" size="1" title="Please select city.(If you can't select country or state, then select country or state first.)" required> 
-                <option value="" selected="selected">Select State First</option>
-                </select>
-                <div class="error remove"></div>
-            </div>                      
-        </div>
-
-        <!-- <button type="submit" class="btn btn-outline-danger">Clear</button> -->
-        <input name="save" type="button" onclick="validate_form()" class="btn btn-outline-success mt-4 mb-3" value="Save">
-        <input name="clear" type="button" onclick="_clear()" class="btn btn-outline-danger mt-4 mb-3" value="Clear">
-    </form>
-    <br>
-    <div class="continer">
-        <div class="row">
-            <div class="col"> 
-                <input name="search" type="text" onkeyup="_search()" placeholder="Search">
-            </div>
-            <div class="col">
-                <label class="form-check-label" for="fileter">Filter : </label>
-                <input name='fileter' type="button" onclick="sorting()" value="Ascending">
-            </div>
-        </div>
+            <div class="view"></div>
+        </div>    
+        
     </div>
-
-    <div class="view"></div>
-
-    </div>  
-    
 
 
     <!-- Option 2: Separate Popper and Bootstrap JS -->
@@ -134,7 +155,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"></script>
     <script src="dropdown.js"></script>
     <script src="datastore.js"></script>
-    <script src="validate.js"></script>
+    <script src="validate_test.js"></script>
 
 </body>
 

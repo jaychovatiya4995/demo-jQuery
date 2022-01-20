@@ -17,7 +17,6 @@ $(document).ready(function () {
     }
 
     var county_sel = document.getElementById("countySel");
-        country_sel1 = $('#countySel')[0]
         state_sel = document.getElementById("stateSel");
         district_sel = document.getElementById("districtSel");
 

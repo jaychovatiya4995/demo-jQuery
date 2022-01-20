@@ -1,9 +1,9 @@
 $(document).ready(function () {
-    show_recordes();
+    show_recordes(all_data);
 });
 
 var all_data = [
-    {
+    {   
         current_time: 'January 6, 2022',
         name: 'abhi',
         email: 'abhi@gmail.com',
@@ -14,7 +14,7 @@ var all_data = [
         state: 'Gujarat',
         city: 'Surat'
     },
-    {
+    {   
         current_time: 'January 6, 2022',
         name: 'abhishek savaliya',
         email: 'abhi@gmail.com',
@@ -27,17 +27,18 @@ var all_data = [
     }
 ]
 
+function calculate_age(yy, mm, dd) { // birthday is as date
+    var birthdate = new Date(yy, mm, dd)
+    var age_dif_ms = Date.now() - birthdate.getTime();
+    var age_date = new Date(age_dif_ms); // miliseconds from epoch
+    return Math.abs(age_date.getUTCFullYear() - 1970);
+}
 
-function show_recordes() {
+
+function show_recordes(all_data) {
     // data show in table view
     data = all_data
-    console.log(data);
-    function calculate_age(yy, mm, dd) { // birthday is as date
-        var birthdate = new Date(yy, mm, dd)
-        var age_dif_ms = Date.now() - birthdate.getTime();
-        var age_date = new Date(age_dif_ms); // miliseconds from epoch
-        return Math.abs(age_date.getUTCFullYear() - 1970);
-    }
+    console.log('show',data);
 
     var my_table = "<table name='mytable' class='table mt-4 table-bordered table-striped table-hover table-dark'>";
     my_table += "<tr>";
@@ -66,7 +67,7 @@ function show_recordes() {
         my_table += "<td name='g_country'>" + data[key].country + "</td>";
         my_table += "<td name='g_state'>" + data[key].state + "</td>";
         my_table += "<td name='g_city'>" + data[key].city + "</td>";
-        my_table += "<td>" +
+        my_table += "<td class='btn'>" +
             "<button type='button' id='edit' onclick='_edit(this)' class='btn btn-outline-primary'>Edit</button>" +
             "<button type='button' id='delete' onclick='_delete(this)' class='btn btn-outline-danger m-1'>Delete</button>" +
             "</td>"
@@ -84,7 +85,7 @@ function _delete(x) { // x paramenter has 'this' value
     row = cell.closest('tr')
     row_index = row.rowIndex - 1;
     all_data.splice(row_index, 1);
-    show_recordes();
+    show_recordes(all_data);
 }
 
 // cleaer records
@@ -136,12 +137,13 @@ function _add() {
     });
 
     if (save_update.val() == 'Save') {  // add new records
+        id = all_data.length + 1
         all_data.push(record);
     } else {                            // update new records
         all_data[row_index] = record;
     }
 
-    show_recordes();
+    show_recordes(all_data);
     _clear();
 }
 
@@ -150,7 +152,7 @@ function _edit(x) { // x paramenter has 'this' value
 
     rows = $(x).closest('tr');
     row_index = x.closest('td').closest('tr').rowIndex - 1;
-    
+
     $('[name="save"]').val("Update");
     $('[name=clear]').val("Cancle");
 
@@ -198,7 +200,7 @@ function _edit(x) { // x paramenter has 'this' value
     $('[name=country]').val(get_country)
 
     get_state = rows.find("[name=g_state]").text();
-    countySel.onchange();   
+    countySel.onchange();
     $('[name=state]').val(get_state)
 
     get_city = rows.find("[name=g_city]").text();
@@ -206,51 +208,47 @@ function _edit(x) { // x paramenter has 'this' value
     $('[name=cities]').val(get_city)
 }
 
-function _search() {
-    console.log('here is search');
-    var table = $('.table').DataTable();
-    console.log(table);
-//     var input, filter, table, tr, td, i, txt_value;
-//     input = document.getElementsByName("search")[0];
-//     filter = input.value.toUpperCase();
-//     table = document.getElementById("mytable");
-//     tr = table.getElementsByTagName("tr");
+$('.search').keyup(function (){ 
+    var search_value = $('[name="search"]').val();
 
-//     // Loop through all table rows, and hide those who don't match the search query
-//     for (i = 0; i < tr.length; i++) {
-//         td = tr[i].getElementsByTagName("td")[0];
-//         if (td) {
-//             txt_value = td.textContent || td.innerText;
-//             if (txt_value.toUpperCase().indexOf(filter) > -1) {
-//                 tr[i].style.display = "";
-//             } else {
-//                 tr[i].style.display = "none";
-//             }
-//         }
-//     }
-}
+    if (!search_value == "") {  
+        filter_data = all_data.filter(function (obj) {
+            return (obj.name.toLowerCase().includes(search_value.toLowerCase())) ||
+                (obj.email.toLowerCase().includes(search_value.toLowerCase())) ||
+                (obj.gender.toLowerCase().includes(search_value.toLowerCase())) ||
+                (obj.hobby.toString().toLowerCase().includes(search_value.toLowerCase())) ||
+                (obj.city.toLowerCase().includes(search_value.toLowerCase())) ||
+                (obj.state.toLowerCase().includes(search_value.toLowerCase())) ||
+                (obj.city.toLowerCase().includes(search_value.toLowerCase())) ||
+                (calculate_age(obj.birthdate.slice(0, 4), obj.birthdate.slice(5, 7), obj.birthdate.slice(8)).toString().includes(search_value))
+        })
+        show_recordes(filter_data);
+    } else {
+        show_recordes(all_data);
+    }
+});
 
-function sorting() {
-    
-    fileter_value = $('[name="fileter"]')[0];
+$('.sorting').click(function (){
+    filter_value = $('[name="filter"]')[0];
 
-    if (fileter_value.value == 'Ascending') {
-        $('[name="fileter"]').val('Descending');
-    }else{
-        $('[name="fileter"]').val('Ascending');
+    if (filter_value.value == 'Ascending') {
+        $('[name="filter"]').val('Descending');
+    } else {
+        $('[name="filter"]').val('Ascending');
     }
 
-    function sort_name_ascending(a, b){
+    function sort_by_name(a, b) {
         var aName = a.name.toLowerCase();
         var bName = b.name.toLowerCase();
-        if(fileter_value.value == 'Ascending'){ 
+        if (filter_value.value == 'Ascending') {
             return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
-        }else{
+        } else {
             return ((aName > bName) ? -1 : ((aName < bName) ? 1 : 0));
         }
-      }
+    }
 
-     
-    all_data = all_data.sort(sort_name_ascending)
-    show_recordes();
-}
+
+    all_data = all_data.sort(sort_by_name)
+    show_recordes(all_data); 
+});
+    
