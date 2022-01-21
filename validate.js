@@ -91,7 +91,6 @@ function chekbox_validation() {
 
 var form = $(".border");
 $('.save').on('click',function (){
-    console.log('validate')
     if (form.valid() && chekbox_validation() && radio_button_validation()) {
         _add()
     }else{

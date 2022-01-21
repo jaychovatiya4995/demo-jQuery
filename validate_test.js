@@ -29,7 +29,6 @@ const set_success = element => {
     error_display.innerText = '';
     // input_control.classList.add('success');
     input_control.classList.remove('error');
-
 };
 
 var validation = true;
@@ -73,13 +72,16 @@ $('input').blur(function () {
 $('select').blur(function () {
     element = $(this)[0];
     message = element.title;
-
+ 
     if (element.options[element.selectedIndex].value == "") {
         set_error(element, message);
         validation = false;
     } else {
         set_success(element);
         validation = true;
+    }
+    if(!element.options[element.selectedIndex].value == "" && element.name != "cities"){
+        set_error($(element).parent().next().children('select')[0], $(element).parent().next().children('select')[0].title.slice(0, 20))
     }
 });
 
